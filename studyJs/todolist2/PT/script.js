@@ -30,18 +30,30 @@ const store = document.querySelector(".store");
                 completed: false,
 
             })
+          
 
-            const newItem = createEl(`<li data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
+            if(input.value == "" || input.value == false)
+            { return false} //
+            else{
+            const newItem = createEl(`<li data-value="${id}" class=""><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
             input.value = ""; //value -> innerHTML.
             
 
             newItem.querySelector(".destroy").addEventListener('click',e=>{
-                newItem.remove(); // newItem의 destroy를  어떻게 특정하나요 ..? newItem은 여러갠데..
-
+                newItem.remove(); // newItem의 destroy를  어떻게 특정하나요 ..? newItem은 여러갠데.. e.target
 
 
             })
 
+            newItem.querySelector(".toggle").addEventListener('click', e =>{
+                e.target.closest
+                
+                newItem.classList.add("completed");
+
+                
+            
+
+            })
             todoList.appendChild(newItem); // newItem apeend child;
             
         }
@@ -51,7 +63,7 @@ const store = document.querySelector(".store");
 
 
         
-    })
+}})
 
     
 
