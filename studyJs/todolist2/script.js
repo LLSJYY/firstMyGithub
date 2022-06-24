@@ -32,28 +32,55 @@ const store = document.querySelector(".store");
                 completed: false,
 
             })
-
-            const todoListText = createEl(`<li data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
+            console.log(inputStore)
+            const newCreateEl = createEl(`<li class=""data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
             input.value = ""; //value -> innerHTML.
-            store.innerHTML += `<li>${id}</li>`
+            // store.innerHTML += `<li>${id}</li>`
 
-            todoList.appendChild(todoListText)
-            console.log(btnDestroy)
+
+
+            newCreateEl.querySelector(".destroy").addEventListener('click', e => {
+                newCreateEl.remove()
+            }
+
+            );
+
+
+           
+            newCreateEl.querySelector('.toggle').addEventListener('click', e => {
+                const idValue = parseInt(e.target.closest("li").dataset.value) // 체크박스 에 체크된 id값
+                newCreateEl.classList.add("completed");
+                inputStore.forEach(function(el){
+                    if(el.id === idValue){
+                       el.completed = !el.completed;  //  falsy /truthy !
+                    } 
+                })
+              
+                 console.log(inputStore)
+            }
+            )
+
+
+            store.innerHTML +=  id;
+            todoList.appendChild(newCreateEl)
 
         }
-        console.log(btnDestroy)
 
 
 
-        
+
+
+
+
     })
 
-    
+
 
 
 
     filltersBtn.forEach(function (el, index) {
         el.addEventListener('click', function (e) {
+            // const newCreateEl = createEl(`<li class=""data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
             switch (index) {
                 case 0: // All 
                     break;
@@ -62,12 +89,15 @@ const store = document.querySelector(".store");
                 case 2: // COMPLETED
 
                     todoList.innerHTML = "";
-                    inputStore.forEach(function (data) {
-                        const { id, text } = data;
-                        console.log(data);
-
-                        todoList.innerHTML = ` <li data-value="${id}"  class="completed">${input.value}</li>`
-                    })
+                   
+                        inputStore.forEach(function(el){
+                           if(el.completed == true){
+                            todoList.innerHTML += `<li class="completed" data-value="${el.id}"><div><input class="toggle" type ="checkbox" checked><label>${el.text}</label><button class="destroy"></button></div></li>`
+                            // ` <li data-value="${el.id}" class="${el.completed}">${el.te}</li>`
+                            // `<input type="toggle" ${el.completed && "checked" }}  
+                        }
+                        })
+                        
                     break;
 
             }
@@ -75,6 +105,3 @@ const store = document.querySelector(".store");
 
     })
 })()
-
-console.log(btnDestroy)
-/* */
