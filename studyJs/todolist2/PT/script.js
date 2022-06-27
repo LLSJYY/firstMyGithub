@@ -30,42 +30,67 @@ const store = document.querySelector(".store");
                 completed: false,
 
             })
-          
-
-            if(input.value == "" || input.value == false)
-            { return false} //
-            else{
-            const newItem = createEl(`<li data-value="${id}" class=""><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
-            input.value = ""; //value -> innerHTML.
-            
-
-            newItem.querySelector(".destroy").addEventListener('click',e=>{
-                newItem.remove(); // newItem의 destroy를  어떻게 특정하나요 ..? newItem은 여러갠데.. e.target
 
 
-            })
+            if (input.value == "" || input.value == false) { return false } //
+            else {
+                const newItem = createEl(`<li data-value="${id}" class=""><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
+                input.value = ""; //value -> innerHTML.
 
-            newItem.querySelector(".toggle").addEventListener('click', e =>{
-                e.target.closest
-                
-                newItem.classList.add("completed");
 
-                
-            
+                newItem.querySelector(".destroy").addEventListener('click', e => {
+                    newItem.remove(); // newItem의 destroy를  어떻게 특정하나요 ..? newItem은 여러갠데.. e.target
 
-            })
-            todoList.appendChild(newItem); // newItem apeend child;
-            
+
+                })
+
+
+
+                newItem.querySelector('.toggle').addEventListener('click', e => {
+                    
+                    if (newItem.classList.contains("completed")) {
+                        newItem.classList.remove("completed");
+
+                    } else {
+                        newItem.classList.add("completed")
+                    }// completed 가 없다면 붙여주기
+
+                    const idValue = parseInt(e.target.closest("li").dataset.value); // 체크박스 에 체크된 id값
+                    const todoCount = document.querySelector(".todo-count");
+                 
+
+
+                 inputStore.forEach(function (el) {
+                        if (el.id === idValue) {
+                            el.completed = !el.completed;  //  falsy /truthy !
+                            
+                        }
+
+                    })
+
+                    
+                    let todoCountStore = inputStore.filter(function(data){
+                        return data.completed;
+                    }).length; // 
+
+                    todoCount.innerHTML = `<strong>${todoCountStore}</strong> items left` // todoCount update
+                    console.log((todoCountStore));
+                    console.log(inputStore)
+                }
+                )
+                todoList.appendChild(newItem); // newItem apeend child;
+
+            }
+
+
+
+
+
+
         }
+    })
+    // 
 
-      
-
-
-
-        
-}})
-
-    
 
 
 
@@ -79,11 +104,13 @@ const store = document.querySelector(".store");
                 case 2: // COMPLETED
 
                     todoList.innerHTML = "";
-                    inputStore.forEach(function (data) {
-                        const { id, text } = data;
-                        console.log(data);
 
-                        todoList.innerHTML = ` <li data-value="${id}"  class="completed">${input.value}</li>`
+                    inputStore.filter(function (data) {
+                        return data.completed;}).forEach(function (data) {
+                        const { id, text } = data;
+
+                        console.log(data);
+                        todoList.innerHTML = `<li data-value="${id}" class=""><div><input class="toggle" type ="checkbox"><label>${text}</label><button class="destroy"></button></div></li>`
                     })
                     break;
 
