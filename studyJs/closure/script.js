@@ -8,6 +8,15 @@ const closure = function(){
     }
 }
 
+(function(){
+ const header = document.querySelector('h1').style.color = "red"
+ 
 
-closure();
-f()
+ document.querySelector("body").addEventListener('click',function(e){
+    header.style.color = "blue";
+ })
+})();
+
+
+
+
