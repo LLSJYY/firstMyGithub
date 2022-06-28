@@ -33,44 +33,47 @@ const store = document.querySelector(".store");
 
             })
             console.log(inputStore)
-            const newCreateEl = createEl(`<li class=""data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
-            input.value = ""; //value -> innerHTML.
-            // store.innerHTML += `<li>${id}</li>`
+
+            if (input.value == "" || input.value == false) { return false } //
+            else {
+                const newCreateEl = createEl(`<li class=""data-value="${id}"><div><input class="toggle" type ="checkbox"><label>${input.value}</label><button class="destroy"></button></div></li>`)
+                input.value = ""; //value -> innerHTML.
+                // store.innerHTML += `<li>${id}</li>`
 
 
 
-            newCreateEl.querySelector(".destroy").addEventListener('click', e => {
-                newCreateEl.remove()
+                newCreateEl.querySelector(".destroy").addEventListener('click', e => {
+                    newCreateEl.remove()
+                }
+
+                );
+
+
+
+                newCreateEl.querySelector('.toggle').addEventListener('click', e => {
+
+                    if (newCreateEl.classList.contains("completed")) {
+                        newCreateEl.classList.remove("completed");
+
+                    } else {
+                        newCreateEl.classList.add("completed")
+                    }// completed 가 없다면 붙여주기
+
+                    const idValue = parseInt(e.target.closest("li").dataset.value) // 체크박스 에 체크된 id값
+
+
+                    inputStore.forEach(function (el) {
+                        if (el.id === idValue) {
+                            el.completed = !el.completed;  //  falsy /truthy !
+                        }
+                    })
+
+                    console.log(inputStore)
+                }
+                )
             }
 
-            );
-
-
-
-            newCreateEl.querySelector('.toggle').addEventListener('click', e => {
-                
-                if(newCreateEl.classList.contains("completed")){
-                    newCreateEl.classList.remove("completed");
-                    
-                }else {
-                    newCreateEl.classList.add("completed")
-                }// completed 가 없다면 붙여주기
-
-                const idValue = parseInt(e.target.closest("li").dataset.value) // 체크박스 에 체크된 id값
-                
-
-                inputStore.forEach(function (el) {
-                    if (el.id === idValue) {
-                        el.completed = !el.completed;  //  falsy /truthy !
-                    }
-                })
-
-                console.log(inputStore)
-            }
-            )
-
-
-            store.innerHTML += id;
+            
             todoList.appendChild(newCreateEl)
 
         }
@@ -100,6 +103,7 @@ const store = document.querySelector(".store");
                     todoList.innerHTML = "";
 
                     inputStore.forEach(function (el) {
+                        console.log(el)
                         if (el.completed == true) {
                             todoList.innerHTML += `<li class="c ompleted" data-value="${el.id}"><div><input class="toggle" type ="checkbox" checked><label>${el.text}</label><button class="destroy"></button></div></li>`
                             // ` <li data-value="${el.id}" class="${el.completed}">${el.te}</li>`
