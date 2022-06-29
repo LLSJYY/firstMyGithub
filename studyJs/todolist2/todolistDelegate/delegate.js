@@ -50,8 +50,19 @@
 
   todoList.addEventListener("click", e => {
     if (e.target.tagName == "INPUT") { //e는 clickenvent
+ 
+      const dataValue = parseInt(e.target.closest("li").dataset.id);  // 왜 value?
+      const filterStore = todoStore.filter(idvalue =>{
+        return idvalue.id == dataValue;
+      
+      })
+        
+      console.log(filterStore)
+      e.target.closest("li").classList.contains("completed") ? (e.target.closest("li").classList.remove("completed"), filterStore.completed = false) : (e.target.closest("li").classList.add("completed"),filterStore.completed = true);
+      
+     
 
-      e.target.closest("li").classList.contains("completed") ? e.target.closest("li").classList.remove("completed") : e.target.closest("li").classList.add("completed");
+     // inputBox인데 왜 value. .?값이 아닌가여 ?
     } else if (e.target.tagName == "BUTTON") {
       e.target.closest("li").remove();
       console.dir(e.target);
@@ -88,14 +99,26 @@
       console.log(el);
       el.addEventListener("click", function (e) {
       newTodo.innerHTML = "";
+      
       switch(index) {
         case 0: //
+          const allBtn = todoStore;
         break;
         
         case 1:
-          break;
+          const activeBtn = todoStore.filter(e =>{
+            return !todoStore.completed; 
+          })
+            
+          console.log(activeBtn);
+        break;
         
         case 2:
+          const completedBtn = todoStore.filter(e =>{
+            return todoStore.completed; 
+          })
+            
+          console.log(completedBtn);
         break;
         
         
