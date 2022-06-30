@@ -49,20 +49,26 @@
   const toggle = document.querySelector(".toggle");
 
   todoList.addEventListener("click", e => {
-    if (e.target.tagName == "INPUT") { //e는 clickenvent
- 
-      const dataValue = parseInt(e.target.closest("li").dataset.id);  // 왜 value?
-      const filterStore = todoStore.filter(idvalue =>{
-        return idvalue.id == dataValue;
-      
-      })
-        
-      console.log(filterStore)
-      e.target.closest("li").classList.contains("completed") ? (e.target.closest("li").classList.remove("completed"), filterStore.completed = false) : (e.target.closest("li").classList.add("completed"),filterStore.completed = true);
-      
-     
 
-     // inputBox인데 왜 value. .?값이 아닌가여 ?
+    if (e.target.tagName == "INPUT") {
+      const data = parseInt(e.target.closest("li").dataset.id);
+      todoStore.forEach(e => {
+        
+        if (e.id == data) {
+          e.completed = !e.completed;
+        }
+      })
+
+    
+
+
+
+
+      e.target.closest("li").classList.contains("completed") ? e.target.closest("li").classList.remove("completed") : e.target.closest("li").classList.add("completed")
+
+
+
+      // inputBox인데 왜 value. .?값이 아닌가여 ?
     } else if (e.target.tagName == "BUTTON") {
       e.target.closest("li").remove();
       console.dir(e.target);
@@ -95,39 +101,38 @@
   /** filterBtn (All,Active,Completed) */
 
 
-    filtersBtn.forEach((el,index) => {
-      console.log(el);
-      el.addEventListener("click", function (e) {
-      newTodo.innerHTML = "";
-      
-      switch(index) {
+  filtersBtn.forEach((el, index) => {
+    el.addEventListener("click", function (e) {
+      todoList.innerHTML = " ";
+      let btnStore = [];
+
+      switch (index) {
         case 0: //
-          const allBtn = todoStore;
-        break;
-        
+          btnStore = todoStore;
+          break;
+
         case 1:
-          const activeBtn = todoStore.filter(e =>{
-            return !todoStore.completed; 
+          btnStore = todoStore.filter(el => {
+            return !el.completed;
           })
-            
-          console.log(activeBtn);
-        break;
-        
+          break;
+
         case 2:
-          const completedBtn = todoStore.filter(e =>{
-            return todoStore.completed; 
+          btnStore = todoStore.filter(el => {
+            return el.completed;
           })
-            
-          console.log(completedBtn);
-        break;
-        
-        
-        }
-       
-        console.log(e.target)
-        
+          break;
+      }
+
+      console.log(btnStore)
+
+      btnStore.forEach(e =>{
+        todoList.innerHTML +=  `<li data-id="${e.id}" class="${e.completed ? "completed" : ""}"><div><input class="toggle" type="checkbox" ${e.completed ? "checked" : ""}><label>${e.text}</label><button class="destroy"></button></div></li>`
       })
+      
+
     })
+  })
 
 
 
