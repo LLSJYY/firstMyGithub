@@ -31,7 +31,7 @@ const storeLocalStorage = function () {
   localStorage.setItem('cart', JSON.stringify(cartItem));
 } 
 const getStorage =function(){
-  const newDiv = document.querySelector(".cart-container");
+  const newDiv = document.querySelector(".cart-left-section");
     const getLocalStorage = JSON.parse(localStorage.getItem('cart'));
     console.log(getLocalStorage)
     newDiv.innerHTML += `${getLocalStorage}`; 
@@ -67,13 +67,41 @@ productInfoCart.forEach(function (el) {
 })
 
 
-/** CART*/
-
-const clickedCartBtn = document.querySelectorAll(".global-nav-button").forEach(el=>{
+/** HTML INDEX SWITCH */
+const clickedCartBtn = document.querySelectorAll(".global-nav-button").forEach(function(el,index){
   el.addEventListener('click',e=>{
-    debugger;
-    console.log(e.target); //왜이렇게하면 콘솔에 디버거 걸면 뜨는데 이후에는 사라질까요 ..?
-  })
+    console.log(index)
+    switch(index){
+      case 0: //
+      break;
+  
+      case 1:
+      break;
+      
+      case 2:
+      break;
+      
+      case 3:
+      
+      getStorage();
+      
+      break;
+      
+      case 4:
+      break;
+      
+      case 5:
+      break;
+      
+      case 6:
+        break;
+    }
+  
+    ; //왜이렇게하면 콘솔에 디버거 걸면 뜨는데 이후에는 사라질까요 ..?
+   
 
 })
+  
+})
+ 
 
