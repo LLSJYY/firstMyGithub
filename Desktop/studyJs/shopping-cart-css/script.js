@@ -1,19 +1,20 @@
-//1.상품목록 카트버튼 이벤트 딜리게이트 걸어서, 쇼핑 카트버튼을 누르면 로컬스트리지 저장, 그후 장바구니탭에서
-// 받아옴, 주문상세도 마찬가지
-//2. 상품 상세 버튼 주문하기 , 로컬스트리지저장 이후 
 
-/**listItem */
+
+
+
+
 
 let count = 0;
 const storedImg =[]; // 이름이 맘에 안듭니다.
 const productInfoCart = document.querySelectorAll(".flex.justify-between.w-280.p-5");
-const newCartItem = function () {
+/** CART IMG  */
+const newCartItem = function (e) {
     const section = document.querySelector(".cart-left-section");
     section.innerHTML += `<div class="cart-container">
     <div class="flex gap-15 mt-10">
       <input class="checkbox" name="checkbox" type="checkbox" checked="true">
-      <img class="w-144 h-144" src="./assets/images/product.png" alt="PET보틀-정사각(420ml)">
-      <span class="cart-name">PET보틀-정사각(420ml)</span>
+      <img class="w-144 h-144" src="./assets/images/product.png" alt="${e.getImgName}">
+      <span class="cart-name">${e.getImgName}</span>
     </div>
     <div class="flex-col-center justify-end gap-15">
       <img class="cart-trash-svg" src="./assets/svgs/trash.svg" alt="삭제">
@@ -24,46 +25,23 @@ const newCartItem = function () {
           <button class="number-input-button">▼</button>
         </div>
       </div>
-      <span class="cart-price">123,456원</span>
+      <span class="cart-price">${e.getImgPrice}</span>
     </div>
     </div>
     <hr class="divide-line-thin mt-10" />`
 }
+/** LOCAL STORAGE */
 const storeLocalStorage = function () {
-  const cartItem = `<div class="cart-container">
-<div class="flex gap-15 mt-10">
-  <input class="checkbox" name="checkbox" type="checkbox" checked="true">
-  <img class="w-144 h-144" src="./assets/images/product.png" alt="PET보틀-정사각(420ml)">
-  <span class="cart-name">PET보틀-정사각(420ml)</span>
-</div>
-<div class="flex-col-center justify-end gap-15">
-  <img class="cart-trash-svg" src="./assets/svgs/trash.svg" alt="삭제">
-  <div class="number-input-container">
-    <input type="number" class="number-input" value="1">
-    <div>
-      <button class="number-input-button">▲</button>
-      <button class="number-input-button">▼</button>
-    </div>
-  </div>
-  <span class="cart-price">123,456원</span>
-</div>
-</div>
-<hr class="divide-line-thin mt-10" />` // 상품이 달라지면 이런거는 어떻게 해야하나요 센세?  newItem 코드번호가 넘긴데 어떻게할까영.. documnet.qs로 잡고싶은데 <hr class="divide-line-thin mt-10" />`안잡힙니다.
-  localStorage.setItem('cart', JSON.stringify(cartItem));
-} // 1번
-
+  localStorage.setItem('newCartItem', JSON.stringify(storedImg));
+} 
 
 const getStorage = function () {
-
-  const newDiv = document.querySelector(".cart-left-section");
-  const getLocalStorage = JSON.parse(localStorage.getItem('cart'));
-  console.log(getLocalStorage)
-  newDiv.innerHTML += `${getLocalStorage}`;
-
-
-
-}
-
+  const cartSection = document.querySelector(".cart-left-section");
+  const getLocalStorage = JSON.parse(localStorage.getItem('newCartItem'));
+  getLocalStorage.forEach(e=>{
+    newCartItem(e);
+  })
+ 
 productInfoCart.forEach(function (el) {
 
   const cartSection = document.querySelector(".cart-left-section");
@@ -83,14 +61,13 @@ productInfoCart.forEach(function (el) {
 
       console.log(storedImg)
       storeLocalStorage(); //저장을 3번하고싶은데 안되네요 ..
-
-
+      console.log(storeLocalStorage())
+      
     }
     if (e.target.classList.contains('product-info__name') || e.target.classList.contains('product-info__price')) {
-
       console.log("상품상세로 이동")
       //redirecting?
-      window.location.href = '/Users/leesu/Desktop/studyJs/shopping-cart-css/orderDetail.html'
+      window.location.href = '/Users/leesu/Desktop/studyJs/shopping-cart-css/detail.html'
 
 
     }
@@ -140,35 +117,4 @@ const clickedCartBtn = document.querySelectorAll(".global-nav-button").forEach(f
 
 })
 
-// //cartItem.
 
-// <div class="cart-container">
-//             <div class="flex gap-15 mt-10">
-//               <input class="checkbox" name="checkbox" type="checkbox" checked="true">
-//               <img class="w-144 h-144" src="./assets/images/product.png" alt="PET보틀-정사각(420ml)">
-//               <span class="cart-name">PET보틀-정사각(420ml)</span>
-//             </div>
-//             <div class="flex-col-center justify-end gap-15">
-//               <img class="cart-trash-svg" src="./assets/svgs/trash.svg" alt="삭제">
-//               <div class="number-input-container">
-//                 <input type="number" class="number-input" value="1">
-//                 <div>
-//                   <button class="number-input-button">▲</button>
-//                   <button class="number-input-button">▼</button>
-//                 </div>
-//               </div>
-//               <span class="cart-price">123,456원</span>
-//             </div>
-//           </div>
-          
-
-//           <div>
-//           <img src="./assets/images/product.png" alt="PET보틀-정사각(420ml)">
-//           <div class="flex justify-between w-280 p-5">
-//             <div class="product-info">
-//               <span class="product-info__name">PET보틀-정사각(420ml)</span>
-//               <span class="product-info__price">43,000원</span>
-//             </div>
-//             <img src="assets/svgs/cart.svg" alt="장바구니">
-//           </div>
-//         </div>
