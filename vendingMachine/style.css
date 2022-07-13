@@ -1,0 +1,30 @@
+*{
+
+}
+
+.machine {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  width: 400px;
+  height: 700px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 10px;
+  background-color: whitesmoke;
+  position: relative;
+  /* box-shadow: inset 2px -2px 15px 5px #760108; */
+}
+
+.shelves {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1.5em;
+  border-bottom: 2.5em solid #8f020a;
+}
+
+.drink{
+  display:  flex;
+}
+
